@@ -1,0 +1,78 @@
+[package]
+name = "aether-core"
+version = "0.1.0"
+description = "Decentralized Zero-Trust P2P Messenger Core (Anti-DPI, E2EE, CRDT, Iroh QUIC)"
+authors = ["Aether Systems Architecture"]
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "aether_core_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.0.5", features = [] }
+
+[dependencies]
+# Tauri v2 Core & Plugins
+tauri = { version = "2.2.0", features = [] }
+tauri-plugin-shell = "2.2.0"
+tauri-plugin-dialog = "2.2.0"
+tauri-plugin-fs = "2.2.0"
+tauri-plugin-notification = "2.2.0"
+
+# Async Runtime & Streams
+tokio = { version = "1.42", features = ["full"] }
+futures-util = "0.3"
+async-trait = "0.1"
+bytes = "1.9"
+
+# P2P Networking, QUIC Transport, NAT Traversal, Blobs & Gossip
+iroh = "0.28.1"
+iroh-base = "0.28.1"
+iroh-net = "0.28.1"
+iroh-blobs = "0.28.1"
+iroh-gossip = "0.28.1"
+quinn = "0.11"
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+
+# Stealth Transport (HTTPS/WSS Port 443 DPI Obfuscation & Blind Relays)
+tokio-tungstenite = { version = "0.24", features = ["rustls-tls-webpki-roots"] }
+webpki-roots = "0.26"
+
+# Military-Grade Zero-Trust Cryptography
+bip39 = { version = "2.1", features = ["rand"] }
+ed25519-dalek = { version = "2.1", features = ["rand_core", "serde", "zeroize"] }
+x25519-dalek = { version = "2.0", features = ["static_secrets", "serde", "zeroize"] }
+curve25519-dalek = { version = "4.1", features = ["zeroize"] }
+chacha20poly1305 = { version = "0.10", features = ["std"] }
+blake3 = "1.5"
+sha2 = "0.10"
+hmac = "0.12"
+hkdf = "0.12"
+argon2 = "0.5"
+rand = "0.8"
+zeroize = { version = "1.8", features = ["derive"] }
+
+# Local Encrypted Database (SQLite WAL) & CRDT Synchronization
+rusqlite = { version = "0.32", features = ["bundled"] }
+loro = "1.0"
+
+# Serialization & Encoding
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+bincode = "1.3"
+bs58 = "0.5"
+hex = "0.4"
+base64 = "0.22"
+uuid = { version = "1.11", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Diagnostics, Error Handling & Concurrency
+thiserror = "2.0"
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+parking_lot = "0.12"
+dashmap = "6.1"
+once_cell = "1.20"
